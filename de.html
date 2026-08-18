@@ -75,6 +75,64 @@
     </div>
   </header>
 
+  <!-- ========== Audio player — top of page per user request ========== -->
+  <section class="ap-stage" id="ap-stage">
+    <div class="wrap">
+      <div id="ap-anker" class="ap-anchor"></div>
+      <div class="audio-player" id="ap" data-state="idle">
+        <div class="ap-head">
+          <h3>Mach mit · Audio-Anleitung</h3>
+          <span class="ap-sub">Geführte Sitzung · ~13 Min.</span>
+          <span class="ap-loading" id="ap-loading">lädt…</span>
+          <div class="ap-lang-switch" role="tablist" aria-label="Audio-Sprache">
+            <button class="ap-lang-btn" data-lang="en" aria-pressed="false">EN</button>
+            <button class="ap-lang-btn active" data-lang="de" aria-pressed="true">DE</button>
+          </div>
+        </div>
+
+        <div class="ap-controls">
+          <button class="ap-btn play" id="ap-play" aria-label="Abspielen / Pause">
+            <svg class="ap-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="ap-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+          <button class="ap-btn" id="ap-restart" aria-label="Von vorne beginnen" title="Neu starten">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg>
+          </button>
+          <div class="ap-progress" id="ap-progress" role="slider" aria-label="Springen" tabindex="0">
+            <div class="ap-progress-fill" id="ap-progress-fill"></div>
+          </div>
+          <span class="ap-time" id="ap-time">0:00 / 0:00</span>
+        </div>
+
+        <div class="ap-mixer">
+          <label>
+            <span>Binaural (Theta-Basis)</span>
+            <input type="range" id="ap-vol-binaural" min="0" max="1" step="0.01" value="0.45" />
+          </label>
+          <label>
+            <span>Stimmführung</span>
+            <input type="range" id="ap-vol-voice" min="0" max="1" step="0.01" value="0.95" />
+          </label>
+          <label>
+            <span>Ambient-Drone</span>
+            <input type="range" id="ap-vol-drone" min="0" max="1" step="0.01" value="0.45" />
+          </label>
+        </div>
+
+        <div class="ap-tips">
+          <strong>Optimales Setup:</strong> benutze <em>Stereo-Kopfhörer</em> — binaurale Beats funktionieren
+          nur, wenn jedes Ohr ein anderes Signal empfängt. Lichter aus. Telefon mit dem Bildschirm nach unten.
+          13 Minuten Stille. Drück auf Abspielen, schließ die Augen und folge Jessas Stimme. Die binaurale
+          Basis erledigt den Rest.
+        </div>
+
+        <audio id="ap-binaural" src="audio/tracks/01-binaural-4hz-15min.opus" preload="none" loop></audio>
+        <audio id="ap-voice" src="audio/tracks/induction-de.mp3" preload="auto"></audio>
+        <audio id="ap-drone" src="audio/tracks/03-drone-ambient-15min.opus" preload="none" loop></audio>
+      </div>
+    </div>
+  </section>
+
   <!-- ========== Hero ========== -->
   <section id="top" class="hero">
     <div class="wrap">
@@ -373,13 +431,6 @@
         geübt haben. Sie ist der einfachste, zuverlässige Einstiegspunkt und der, mit dem ich heute Abend
         beginnen würde.
       </p>
-
-      <!-- ========== Audio player (moved to top per user request) ========== -->
-      <div id="ap-anker" class="ap-anchor"></div>
-      <div class="audio-player" id="ap" data-state="idle">
-        <div class="ap-head">
-          <h3>Zuhören &amp; Mitspielen</h3>
-          <span class="ap-sub">Geführte Sitzung · ~13 Min</span>
 
       <!-- ========== Fünf-Phasen-Überblick ========== -->
       <div class="five-phases">

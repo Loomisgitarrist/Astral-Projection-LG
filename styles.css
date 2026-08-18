@@ -593,6 +593,20 @@ footer {
   gap: 18px;
 }
 
+/* ---------- Audio stage (top of page) ---------- */
+.ap-stage {
+  padding: 56px 0 48px;
+  background: linear-gradient(180deg, rgba(10,4,20,0.55), rgba(20,8,42,0.85));
+  border-bottom: 1px solid var(--card-border);
+}
+.ap-stage .audio-player {
+  margin: 0 auto;
+  max-width: 760px;
+}
+@media (max-width: 640px) {
+  .ap-stage { padding: 32px 0 24px; }
+}
+
 /* ---------- Audio anchor offset ---------- */
 /* The audio player must be reachable by clicking "Begin the practice"
    in the hero, which scrolls to #ap-anchor / #ap-anker. The sticky
