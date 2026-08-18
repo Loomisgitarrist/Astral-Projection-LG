@@ -21,6 +21,29 @@
   --warn:       #ffd166;
   --danger:     #ff7a8a;
 
+  /* Varied, contrasting palette for steps, tags, and CTAs.
+     Each color has a paired darker shade for the gradient base,
+     and a soft tinted glow used for the box-shadow / hover halo. */
+  --c1-yellow:        #ffd166;   /* warm yellow */
+  --c1-yellow-deep:   #ff9d3a;   /* deep orange-yellow */
+  --c1-yellow-glow:   rgba(255, 209, 102, 0.40);
+
+  --c2-pink:          #ff7eb6;   /* hot pink */
+  --c2-pink-deep:     #ff4a8b;   /* deep pink */
+  --c2-pink-glow:     rgba(255, 126, 182, 0.40);
+
+  --c3-blue:          #7dd3fc;   /* baby / sky blue */
+  --c3-blue-deep:     #38bdf8;   /* deep sky */
+  --c3-blue-glow:     rgba(125, 211, 252, 0.40);
+
+  --c4-mint:          #6affc6;   /* mint green */
+  --c4-mint-deep:     #34d399;   /* deep emerald */
+  --c4-mint-glow:     rgba(106, 255, 198, 0.40);
+
+  --c5-coral:         #ff9af0;   /* coral pink / fuchsia */
+  --c5-coral-deep:    #d946ef;   /* deep fuchsia */
+  --c5-coral-glow:    rgba(255, 154, 240, 0.40);
+
   --card-bg:        rgba(20, 8, 42, 0.72);
   --card-border:    rgba(201, 163, 255, 0.18);
   --card-shadow:    0 10px 30px rgba(0, 0, 0, 0.45);
@@ -246,9 +269,19 @@ small { color: var(--ink-muted); }
 }
 .btn:hover { transform: translateY(-2px); }
 .btn-primary {
-  background: linear-gradient(135deg, var(--bg-5), #b14cff 60%, var(--accent-hot));
+  background: linear-gradient(135deg, var(--c1-yellow), var(--c1-yellow-deep));
   color: #1a0b2e;
-  box-shadow: 0 10px 30px rgba(177,76,255,0.45);
+  box-shadow: 0 10px 30px var(--c1-yellow-glow);
+}
+.btn-secondary {
+  background: linear-gradient(135deg, var(--c2-pink), var(--c2-pink-deep));
+  color: #1a0b2e;
+  box-shadow: 0 10px 30px var(--c2-pink-glow);
+}
+.btn-tertiary {
+  background: linear-gradient(135deg, var(--c3-blue), var(--c3-blue-deep));
+  color: #0a0414;
+  box-shadow: 0 10px 30px var(--c3-blue-glow);
 }
 .btn-ghost {
   background: transparent;
@@ -275,8 +308,14 @@ small { color: var(--ink-muted); }
 }
 
 .metric { text-align: center; padding: 24px 18px; }
-.metric .num { font-family: var(--font-serif); font-size: 2.4rem; color: var(--accent); line-height: 1; }
+.metric .num { font-family: var(--font-serif); font-size: 2.4rem; line-height: 1; }
 .metric .lbl { color: var(--ink-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; margin-top: 8px; }
+
+/* Metric color variants — the four metric cards each take a hue */
+.metric--yellow .num { color: var(--c1-yellow); }
+.metric--pink   .num { color: var(--c2-pink); }
+.metric--blue   .num { color: var(--c3-blue); }
+.metric--mint   .num { color: var(--c4-mint); }
 
 /* ---------- Steps (how-to) ---------- */
 .steps { counter-reset: step; padding: 0; margin: 0; list-style: none; }
@@ -307,6 +346,36 @@ small { color: var(--ink-muted); }
   justify-content: center;
   box-shadow: 0 0 20px rgba(255,154,240,0.35);
 }
+
+/* ---------- Step color variants (cycle through 5 hues so each step stands out) ---------- */
+.step--yellow::before {
+  background: linear-gradient(135deg, var(--c1-yellow), var(--c1-yellow-deep));
+  box-shadow: 0 0 22px var(--c1-yellow-glow);
+}
+.step--pink::before {
+  background: linear-gradient(135deg, var(--c2-pink), var(--c2-pink-deep));
+  box-shadow: 0 0 22px var(--c2-pink-glow);
+}
+.step--blue::before {
+  background: linear-gradient(135deg, var(--c3-blue), var(--c3-blue-deep));
+  box-shadow: 0 0 22px var(--c3-blue-glow);
+}
+.step--mint::before {
+  background: linear-gradient(135deg, var(--c4-mint), var(--c4-mint-deep));
+  box-shadow: 0 0 22px var(--c4-mint-glow);
+}
+.step--coral::before {
+  background: linear-gradient(135deg, var(--c5-coral), var(--c5-coral-deep));
+  box-shadow: 0 0 22px var(--c5-coral-glow);
+}
+
+/* Subtle color tint on the card border that matches the step color */
+.step--yellow { border-color: rgba(255, 209, 102, 0.30); }
+.step--pink   { border-color: rgba(255, 126, 182, 0.30); }
+.step--blue   { border-color: rgba(125, 211, 252, 0.30); }
+.step--mint   { border-color: rgba(106, 255, 198, 0.30); }
+.step--coral  { border-color: rgba(255, 154, 240, 0.30); }
+
 .step h3 { color: var(--ink); margin-bottom: 6px; }
 
 .callout {
@@ -340,6 +409,16 @@ small { color: var(--ink-muted); }
   font-family: var(--font-mono);
   letter-spacing: 0.06em;
 }
+/* Tag color variants — used for the Common / Occasional / Rare chips
+   in the comparison table so each row is visually distinct. */
+.tag.common    { background: rgba(106,255,198,0.18); color: var(--c4-mint);    border-color: rgba(106,255,198,0.40); }
+.tag.occasional{ background: rgba(255,209,102,0.18); color: var(--c1-yellow);  border-color: rgba(255,209,102,0.40); }
+.tag.rare      { background: rgba(255,126,182,0.18); color: var(--c2-pink);    border-color: rgba(255,126,182,0.40); }
+.tag.yellow    { background: rgba(255,209,102,0.18); color: var(--c1-yellow);  border-color: rgba(255,209,102,0.40); }
+.tag.pink      { background: rgba(255,126,182,0.18); color: var(--c2-pink);    border-color: rgba(255,126,182,0.40); }
+.tag.blue      { background: rgba(125,211,252,0.18); color: var(--c3-blue);    border-color: rgba(125,211,252,0.40); }
+.tag.mint      { background: rgba(106,255,198,0.18); color: var(--c4-mint);    border-color: rgba(106,255,198,0.40); }
+.tag.coral     { background: rgba(255,154,240,0.18); color: var(--c5-coral);   border-color: rgba(255,154,240,0.40); }
 
 /* ---------- Audio player ---------- */
 .audio-player {
@@ -394,12 +473,12 @@ small { color: var(--ink-muted); }
 }
 .ap-btn:hover { border-color: var(--accent); color: var(--accent); transform: scale(1.05); }
 .ap-btn.play {
-  background: linear-gradient(135deg, var(--bg-5), var(--accent-hot));
+  background: linear-gradient(135deg, var(--c2-pink), var(--c2-pink-deep));
   color: #1a0b2e;
   border: none;
   width: 58px; height: 58px;
   font-size: 1.25rem;
-  box-shadow: 0 6px 22px rgba(177,76,255,0.55);
+  box-shadow: 0 6px 22px var(--c2-pink-glow);
 }
 .ap-btn.play:hover { transform: scale(1.06); }
 .ap-progress {
