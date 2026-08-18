@@ -30,3 +30,7 @@ audio/tracks/*.tmp
 # (a backup of the GitHub source project this was inspired by).
 # Not part of the application.
 other ideas/
+
+# Dockerfile and nginx config are part of the deployed app
+!Dockerfile
+!nginx.conf

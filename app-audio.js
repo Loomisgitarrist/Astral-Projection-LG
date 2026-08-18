@@ -28,6 +28,8 @@
 
   const btnPlay = el('ap-play');
   const btnRestart = el('ap-restart');
+  const iconPlay = btnPlay && btnPlay.querySelector('.ap-icon-play');
+  const iconPause = btnPlay && btnPlay.querySelector('.ap-icon-pause');
   const prog = el('ap-progress');
   const progFill = el('ap-progress-fill');
   const time = el('ap-time');
@@ -99,6 +101,15 @@
     loopsLoaded = true;
   }
 
+  function setPlayingState(playing) {
+    isPlaying = playing;
+    if (iconPlay && iconPause) {
+      iconPlay.style.display = playing ? 'none' : '';
+      iconPause.style.display = playing ? '' : 'none';
+    }
+    btnPlay.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+  }
+
   function play() {
     ensureLoopsLoaded();
     applyVolumes();
@@ -108,20 +119,14 @@
       audioBin.play(),
       audioVox.play(),
       audioDrone.play(),
-    ]).then(() => {
-      isPlaying = true;
-      btnPlay.textContent = '❚❚';
-      btnPlay.setAttribute('aria-label', 'Pause');
-    });
+    ]).then(() => setPlayingState(true));
   }
 
   function pause() {
     audioBin.pause();
     audioVox.pause();
     audioDrone.pause();
-    isPlaying = false;
-    btnPlay.textContent = '▶';
-    btnPlay.setAttribute('aria-label', 'Play');
+    setPlayingState(false);
   }
 
   let playLock = false;
@@ -162,9 +167,7 @@
     setTimeout(() => {
       audioBin.pause();
       audioDrone.pause();
-      isPlaying = false;
-      btnPlay.textContent = '▶';
-      btnPlay.setAttribute('aria-label', 'Play');
+      setPlayingState(false);
     }, 800);
   });
 
