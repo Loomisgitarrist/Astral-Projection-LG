@@ -84,7 +84,7 @@
         consciously ride the natural shift that follows.
       </p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="#guide">Begin the practice</a>
+        <a class="btn btn-primary" href="#ap-anchor">Begin the practice</a>
         <a class="btn btn-ghost" href="#science">Read the science</a>
       </div>
   </section>
@@ -353,6 +353,13 @@
         point and the one I'd start with tonight.
       </p>
 
+      <!-- ========== Audio player (moved to top per user request) ========== -->
+      <div id="ap-anchor" class="ap-anchor"></div>
+      <div class="audio-player" id="ap" data-state="idle">
+        <div class="ap-head">
+          <h3>Listen Along</h3>
+          <span class="ap-sub">Guided session · ~13 min</span>
+
       <!-- ========== Five phases overview ========== -->
       <div class="five-phases">
         <div class="ph">
@@ -450,59 +457,6 @@
             <span class="v-attrib">— Jade Shaw, <a href="https://www.youtube.com/watch?v=ZaWuMQi88sc" target="_blank" rel="noopener">"The Truth About Astral Projection"</a> (YouTube)</span>
           </li>
         </ul>
-      </div>
-
-      <!-- ========== Audio player ========== -->
-      <div class="audio-player" id="ap" data-state="idle">
-        <div class="ap-head">
-          <h3>Listen Along</h3>
-          <span class="ap-sub">Guided session · ~13 min</span>
-          <span class="ap-loading" id="ap-loading">loading…</span>
-          <div class="ap-lang-switch" role="tablist" aria-label="Audio language">
-            <button class="ap-lang-btn active" data-lang="en" aria-pressed="true">EN</button>
-            <button class="ap-lang-btn" data-lang="de" aria-pressed="false">DE</button>
-          </div>
-        </div>
-
-        <div class="ap-controls">
-          <button class="ap-btn play" id="ap-play" aria-label="Play / pause">
-            <svg class="ap-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="ap-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
-          </button>
-          <button class="ap-btn" id="ap-restart" aria-label="Restart from beginning" title="Restart">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg>
-          </button>
-          <div class="ap-progress" id="ap-progress" role="slider" aria-label="Seek" tabindex="0">
-            <div class="ap-progress-fill" id="ap-progress-fill"></div>
-          </div>
-          <span class="ap-time" id="ap-time">0:00 / 0:00</span>
-        </div>
-
-        <div class="ap-mixer">
-          <label>
-            <span>Binaural (theta floor)</span>
-            <input type="range" id="ap-vol-binaural" min="0" max="1" step="0.01" value="0.45" />
-          </label>
-          <label>
-            <span>Voice guide</span>
-            <input type="range" id="ap-vol-voice" min="0" max="1" step="0.01" value="0.95" />
-          </label>
-          <label>
-            <span>Ambient drone</span>
-            <input type="range" id="ap-vol-drone" min="0" max="1" step="0.01" value="0.45" />
-          </label>
-        </div>
-
-        <div class="ap-tips">
-          <strong>Best setup:</strong> use <em>stereo headphones</em> — binaural beats only work with each ear hearing a different
-          signal. Lights off. Phone face-down. Lights-off and quiet for the full 13 minutes. Hit play, then close your eyes
-          and follow Jessa's voice. The binaural floor does the rest.
-        </div>
-
-        <!-- Three audio elements driven by the player. Each preserved across language switches. -->
-        <audio id="ap-binaural" src="audio/tracks/01-binaural-4hz-15min.opus" preload="none" loop></audio>
-        <audio id="ap-voice" src="audio/tracks/induction-en.mp3" preload="auto"></audio>
-        <audio id="ap-drone" src="audio/tracks/03-drone-ambient-15min.opus" preload="none" loop></audio>
       </div>
 
       <ol class="steps" aria-label="Astral projection preparation">

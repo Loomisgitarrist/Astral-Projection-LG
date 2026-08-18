@@ -592,6 +592,18 @@ footer {
   grid-template-columns: 1fr;
   gap: 18px;
 }
+
+/* ---------- Audio anchor offset ---------- */
+/* The audio player must be reachable by clicking "Begin the practice"
+   in the hero, which scrolls to #ap-anchor / #ap-anker. The sticky
+   64px header would otherwise cover the top of the player. This rule
+   tells the browser to leave 80px of breathing room above the anchor
+   when scrolling to it. */
+.ap-anchor {
+  display: block;
+  height: 1px;
+  scroll-margin-top: 80px;
+}
 .five-phases .ph {
   display: grid;
   grid-template-columns: 56px 1fr;
