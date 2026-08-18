@@ -115,6 +115,37 @@
     applyVolumes();
     audioBin.currentTime = 0;
     audioDrone.currentTime = 0;
+
+    // If the voice track isn't ready yet, hold the play state until
+    // 'canplay' fires (or 'loadeddata' as a fallback) so the user sees
+    // a loading indicator instead of pressing a dead button.
+    const ready = audioVox.readyState >= 3; // HAVE_FUTURE_DATA or better
+    const showLoading = () => {
+      root.classList.add('is-loading');
+      loading.classList.add('show');
+    };
+    const hideLoading = () => {
+      root.classList.remove('is-loading');
+      loading.classList.remove('show');
+    };
+
+    if (!ready) {
+      showLoading();
+      const onReady = () => {
+        audioVox.removeEventListener('canplay', onReady);
+        audioVox.removeEventListener('loadeddata', onReady);
+        hideLoading();
+        Promise.allSettled([audioBin.play(), audioVox.play(), audioDrone.play()])
+          .then(() => setPlayingState(true));
+      };
+      audioVox.addEventListener('canplay', onReady);
+      audioVox.addEventListener('loadeddata', onReady);
+      // Kick off the load (preload=metadata only downloads metadata+first chunk;
+      // calling play() forces the browser to fetch the rest)
+      audioVox.load();
+      return;
+    }
+
     Promise.allSettled([
       audioBin.play(),
       audioVox.play(),
@@ -175,6 +206,23 @@
   document.addEventListener('visibilitychange', () => {
     if (document.hidden && isPlaying) pause();
   });
+
+  // Initial loading state: the voice track is being fetched on page
+  // load (preload=auto). Show the loading indicator until ready, so
+  // the user sees that the player is working, not dead.
+  const initialReady = audioVox.readyState >= 3;
+  if (!initialReady) {
+    root.classList.add('is-loading');
+    loading.classList.add('show');
+  }
+  audioVox.addEventListener('canplay', () => {
+    root.classList.remove('is-loading');
+    loading.classList.remove('show');
+  }, { once: true });
+  audioVox.addEventListener('loadeddata', () => {
+    root.classList.remove('is-loading');
+    loading.classList.remove('show');
+  }, { once: true });
 
   applyVolumes();
   tick();

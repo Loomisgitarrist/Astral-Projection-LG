@@ -518,12 +518,36 @@ small { color: var(--ink-muted); }
 .ap-loading {
   font-family: var(--font-mono);
   font-size: 0.78rem;
-  color: var(--ink-muted);
+  color: var(--c1-yellow);
   letter-spacing: 0.06em;
-  margin-left: 8px;
+  margin-left: 12px;
   display: none;
+  align-items: center;
+  gap: 8px;
 }
-.ap-loading.show { display: inline; }
+.ap-loading.show { display: inline-flex; }
+.ap-loading::before {
+  content: "";
+  width: 12px; height: 12px;
+  border: 2px solid rgba(255, 209, 102, 0.25);
+  border-top-color: var(--c1-yellow);
+  border-radius: 50%;
+  animation: ap-spin 0.8s linear infinite;
+}
+@keyframes ap-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Loading state on the player root — applies a subtle visual cue
+   while audio is being fetched. Disables the play button. */
+.audio-player.is-loading .ap-btn.play {
+  opacity: 0.55;
+  cursor: wait;
+}
+.audio-player.is-loading .ap-btn.play:hover {
+  transform: none;
+  box-shadow: 0 6px 22px var(--c2-pink-glow);
+}
 
 @media (max-width: 640px) {
   .ap-lang-switch { margin-left: 0; }
