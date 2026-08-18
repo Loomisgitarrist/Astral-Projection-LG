@@ -1,13 +1,15 @@
 /* Astral Projection LG - Service Worker
-   No cache-buster versioning per user preference.
+   No cache-buster versioning on assets per user preference.
+   The SW cache itself is bumped on every deploy so the old shell
+   is purged and the new HTML/CSS/JS is fetched fresh.
    Strategy:
      - Precache the app shell on install.
      - Network-first for HTML (always try fresh, fall back to cache when offline).
      - Cache-first for static assets (icons, images, css, js).
-     - On activate, purge any old cache created by a previous version of this SW.
+     - On activate, purge any old cache from a previous version of this SW.
 */
 
-const CACHE_NAME = 'astral-lg-shell';
+const CACHE_NAME = 'astral-lg-shell-v6';
 
 const SHELL = [
   './',
@@ -41,9 +43,8 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
       Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    )
+    ).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
 self.addEventListener('fetch', (event) => {
