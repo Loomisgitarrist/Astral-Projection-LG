@@ -77,6 +77,12 @@
 
   <!-- ========== Audio player — top of page per user request ========== -->
   <section class="ap-stage" id="ap-stage">
+    <!-- Background video (21:9 cosmic loop, H.264, ~600 KB) -->
+    <video class="ap-bg" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+      <source src="video/background.mp4" type="video/mp4" />
+    </video>
+    <!-- Dark overlay so the audio player UI stays readable on top of the video -->
+    <div class="ap-bg-overlay" aria-hidden="true"></div>
     <div class="wrap">
       <div id="ap-anker" class="ap-anchor"></div>
       <div class="audio-player" id="ap" data-state="idle">

@@ -698,16 +698,49 @@ footer {
 
 /* ---------- Audio stage (top of page) ---------- */
 .ap-stage {
+  position: relative;
   padding: 56px 0 48px;
   background: linear-gradient(180deg, rgba(10,4,20,0.55), rgba(20,8,42,0.85));
   border-bottom: 1px solid var(--card-border);
+  overflow: hidden;
+}
+.ap-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  pointer-events: none;
+}
+.ap-bg-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 400px at 50% 50%, rgba(10,4,20,0.45), rgba(10,4,20,0.85) 75%),
+    linear-gradient(180deg, rgba(10,4,20,0.40), rgba(20,8,42,0.75));
+}
+.ap-stage .wrap {
+  position: relative;
+  z-index: 2;
 }
 .ap-stage .audio-player {
   margin: 0 auto;
   max-width: 760px;
+  background: linear-gradient(135deg, rgba(10,4,20,0.85), rgba(20,8,42,0.92));
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
 }
 @media (max-width: 640px) {
   .ap-stage { padding: 32px 0 24px; }
+}
+
+/* Respect reduced motion: hide the background video, fall back to gradient */
+@media (prefers-reduced-motion: reduce) {
+  .ap-bg { display: none; }
 }
 
 /* ---------- Audio anchor offset ---------- */
