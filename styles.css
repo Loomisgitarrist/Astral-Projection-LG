@@ -527,6 +527,52 @@ footer {
   border-top: 1px solid var(--card-border);
 }
 
+/* ---------- Five phases overview ---------- */
+.five-phases {
+  background: linear-gradient(135deg, rgba(123,44,191,0.10), rgba(20,8,42,0.55));
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 30px 36px;
+  margin: 8px 0 36px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+.five-phases .ph {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+.five-phases .ph-num {
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--accent-hot), var(--accent-warm));
+  color: #1a0b2e;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(177,76,255,0.35);
+}
+.five-phases .ph-text h4 {
+  margin: 0 0 6px;
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+}
+.five-phases .ph-text p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+@media (min-width: 720px) {
+  .five-phases { grid-template-columns: 1fr; }
+}
+
 /* ---------- Sources & citations ---------- */
 .cite {
   display: inline-block;
