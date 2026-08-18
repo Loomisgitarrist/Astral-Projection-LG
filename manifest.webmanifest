@@ -1,0 +1,33 @@
+{
+  "name": "Astral Projection LG",
+  "short_name": "Astral LG",
+  "description": "A complete guide to astral projection: history, science, and step-by-step techniques.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1a0b2e",
+  "theme_color": "#7b2cbf",
+  "lang": "en",
+  "categories": ["lifestyle", "health", "education"],
+  "icons": [
+    {
+      "src": "images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/icon-maskable.png",
+      "sizes": "410x410",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
