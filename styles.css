@@ -527,6 +527,47 @@ footer {
   border-top: 1px solid var(--card-border);
 }
 
+/* ---------- Back to top ---------- */
+.to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-warm), #ff9d3a);
+  color: #1a0b2e;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(255,209,102,0.40), 0 2px 6px rgba(0,0,0,0.35);
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.2s ease;
+  z-index: 40;
+}
+.to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.to-top:hover {
+  box-shadow: 0 10px 30px rgba(255,209,102,0.60), 0 4px 10px rgba(0,0,0,0.45);
+  transform: translateY(-2px);
+}
+.to-top:focus-visible {
+  outline: 2px solid var(--accent-warm);
+  outline-offset: 3px;
+}
+.to-top svg { display: block; }
+
+@media (max-width: 640px) {
+  .to-top { width: 44px; height: 44px; bottom: 16px; right: 16px; }
+}
+
 /* ---------- A11y & motion ---------- */
 :focus-visible { outline: 2px solid var(--accent-hot); outline-offset: 3px; border-radius: 6px; }
 @media (prefers-reduced-motion: reduce) {

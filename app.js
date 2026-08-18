@@ -35,4 +35,22 @@
     { rootMargin: '-50% 0px -45% 0px' }
   );
   document.querySelectorAll('section[id]').forEach((s) => obs.observe(s));
+
+  // (4) Back-to-top button — fades in after the user scrolls past the hero
+  const toTop = document.getElementById('to-top');
+  if (toTop) {
+    const showAt = () => {
+      const past = window.scrollY > (window.innerHeight * 0.6);
+      toTop.classList.toggle('visible', past);
+    };
+    showAt();
+    window.addEventListener('scroll', showAt, { passive: true });
+    toTop.addEventListener('click', () => {
+      if ('scrollBehavior' in document.documentElement.style) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        window.scrollTo(0, 0);
+      }
+    });
+  }
 })();
