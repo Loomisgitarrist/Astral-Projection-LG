@@ -527,6 +527,60 @@ footer {
   border-top: 1px solid var(--card-border);
 }
 
+/* ---------- Practitioner voices (attributed notes) ---------- */
+.voices {
+  background: rgba(10,4,20,0.55);
+  border: 1px dashed var(--card-border);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  margin: 12px 0 32px;
+}
+.voices .v-head {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-warm);
+  margin-bottom: 6px;
+}
+.voices h2 { margin-top: 0; }
+.voices .v-intro {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  margin-bottom: 24px;
+  max-width: 720px;
+}
+.voices .v-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 16px;
+}
+.voices .v-note {
+  background: rgba(20,8,42,0.65);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 14px 18px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+.voices .v-note .v-attrib {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.10em;
+  color: var(--accent);
+}
+.voices .v-note .v-attrib a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--accent);
+}
+.voices .v-note .v-attrib a:hover { color: var(--accent-hot); border-bottom-color: var(--accent-hot); }
+
 /* ---------- Five phases overview ---------- */
 .five-phases {
   background: linear-gradient(135deg, rgba(123,44,191,0.10), rgba(20,8,42,0.55));
