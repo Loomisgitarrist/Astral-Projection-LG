@@ -12,9 +12,11 @@
 // style assignment.
 
 (() => {
-  // Mobile nav toggle
+  // Mobile nav toggle — targets the dropdown element (id #nav-dropdown)
+  // that lives as a direct child of <body>, NOT nested inside <header>.
+  // This means no ancestor stacking context can cover it.
   const toggle = document.querySelector('.menu-toggle');
-  const links  = document.querySelector('.nav-links');
+  const links  = document.getElementById('nav-dropdown');
   if (toggle && links) {
     const setOpen = (open) => {
       links.classList.toggle('open', open);

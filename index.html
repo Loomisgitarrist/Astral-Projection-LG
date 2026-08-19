@@ -51,8 +51,9 @@
           <span class="brand-tag">A Practical Guide · LG</span>
         </span>
       </a>
-      <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-      <nav class="nav-links" aria-label="Main">
+      <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-dropdown">☰</button>
+      <!-- Inline nav (desktop only, hidden on mobile) -->
+      <nav class="nav-links nav-links--inline" aria-label="Main">
         <a href="#what"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg><span class="nl-text">What is it</span></a>
         <a href="#science"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg><span class="nl-text">Science</span></a>
         <a href="#history"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span class="nl-text">History</span></a>
@@ -70,6 +71,28 @@
       </nav>
     </div>
   </header>
+
+  <!-- Mobile dropdown nav — sibling of <header>, NOT nested inside.
+       Renders at the top of the document so no ancestor stacking
+       context can ever cover it. position:fixed puts it at the
+       viewport level; z-index 99999 keeps it above every other
+       element on the page. -->
+  <nav class="nav-links nav-links--dropdown" id="nav-dropdown" aria-label="Mobile navigation">
+    <a href="#what"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg><span class="nl-text">What is it</span></a>
+    <a href="#science"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg><span class="nl-text">Science</span></a>
+    <a href="#history"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span class="nl-text">History</span></a>
+    <a href="#experiences"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 4.4 4.6.4-3.5 3 1.1 4.5L12 12.9 7.9 15.3 9 10.8 5.5 7.8l4.6-.4L12 3z"/></svg><span class="nl-text">Experiences</span></a>
+    <a href="#guide"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span class="nl-text">How to do it</span></a>
+    <a href="#techniques"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg><span class="nl-text">Techniques</span></a>
+    <a href="#skeptics"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.1 4.1a8 8 0 0 1 11.3 11.3M14.9 9.9a4 4 0 0 1-5.7 5.7M12 12h.01"/></svg><span class="nl-text">Skeptics</span></a>
+    <a href="#safety"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l8 4v6c0 5.5-3.8 10.7-8 12-4.2-1.3-8-6.5-8-12V6l8-4z"/></svg><span class="nl-text">Safety</span></a>
+    <a href="#faq"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.1 9.1a3 3 0 0 1 5.8 1c0 2-3 2-3 4M12 17h.01"/></svg><span class="nl-text">FAQ</span></a>
+    <a href="#sources"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h12a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H4z"/><path d="M4 4v16M9 9h6M9 13h6M9 17h4"/></svg><span class="nl-text">Sources</span></a>
+    <span class="lang-switch" role="group" aria-label="Language">
+      <a href="./index.html" class="active" hreflang="en" aria-label="English version">EN</a>
+      <a href="./de.html" hreflang="de" aria-label="Zur deutschen Version">DE</a>
+    </span>
+  </nav>
 
   <!-- ========== Audio player — top of page per user request ========== -->
   <section class="ap-stage" id="ap-stage">
