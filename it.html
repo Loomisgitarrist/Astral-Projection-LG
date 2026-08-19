@@ -134,18 +134,32 @@
         </div>
 
         <div class="ap-mixer">
-          <label>
-            <span>Binaurale (base theta)</span>
+          <label class="ap-mix-row">
+            <span class="ap-mix-label">Binaurale (base theta) <span class="ap-val" id="ap-val-binaural">0.45</span></span>
             <input type="range" id="ap-vol-binaural" min="0" max="1" step="0.01" value="0.45" />
           </label>
-          <label>
-            <span>Voce guida</span>
+          <label class="ap-mix-row">
+            <span class="ap-mix-label">Voce guida <span class="ap-val" id="ap-val-voice">0.95</span></span>
             <input type="range" id="ap-vol-voice" min="0" max="1" step="0.01" value="0.95" />
           </label>
-          <label>
-            <span>Drone ambientale</span>
+          <label class="ap-mix-row">
+            <span class="ap-mix-label">Drone ambientale <span class="ap-val" id="ap-val-drone">0.45</span></span>
             <input type="range" id="ap-vol-drone" min="0" max="1" step="0.01" value="0.45" />
           </label>
+        </div>
+
+        <!-- Preset del mixer — IndexedDB, salva/carica set di valori con nome -->
+        <div class="ap-presets" id="ap-presets">
+          <div class="ap-presets-head">
+            <span class="ap-presets-title">Preset del mixer</span>
+            <span class="ap-presets-help">Salva i valori attuali, dai un nome, ricaricali dopo.</span>
+          </div>
+          <div class="ap-presets-chips" id="ap-presets-chips" role="list" aria-label="Preset salvati" data-empty-text="Nessun preset — salva il primo qui sotto."></div>
+          <div class="ap-presets-save">
+            <input type="text" id="ap-preset-name" placeholder="Nome preset (es. Immersione profonda)" maxlength="40" aria-label="Nome preset" />
+            <button type="button" id="ap-preset-save-btn" class="ap-btn ap-btn-preset">Salva corrente</button>
+            <button type="button" id="ap-preset-cancel-btn" class="ap-btn ap-btn-preset ap-btn-preset-ghost" hidden>Annulla</button>
+          </div>
         </div>
 
         <div class="ap-tips">
@@ -1059,5 +1073,6 @@
   <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
   <script src="app.js"></script>
   <script src="app-audio.js"></script>
+  <script src="mixer-presets.js"></script>
 </body>
 </html>

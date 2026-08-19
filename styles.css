@@ -530,6 +530,196 @@ small { color: var(--ink-muted); }
 .ap-mixer label { font-size: 0.74rem; color: var(--ink-soft); display: flex; flex-direction: column; gap: 6px; font-family: var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; }
 .ap-mixer input[type="range"] { width: 100%; accent-color: var(--accent-hot); }
 
+/* Live value display on each mixer slider. Shows current numeric value
+   next to the label so users can see what they're setting. */
+.ap-mix-row .ap-mix-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  width: 100%;
+}
+.ap-val {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--c1-yellow);
+  letter-spacing: 0.04em;
+  background: rgba(255, 209, 102, 0.10);
+  border: 1px solid rgba(255, 209, 102, 0.30);
+  padding: 2px 8px;
+  border-radius: 6px;
+  min-width: 42px;
+  text-align: center;
+  text-transform: none;
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+.ap-mixer input[type="range"]:focus ~ .ap-mix-label .ap-val,
+.ap-mix-row:hover .ap-val {
+  background: rgba(255, 209, 102, 0.18);
+  border-color: rgba(255, 209, 102, 0.50);
+}
+input[type="range"]:active + .ap-mix-label .ap-val,
+.ap-mix-row.is-dragging .ap-val {
+  transform: scale(1.06);
+}
+
+/* Mixer presets block (IndexedDB-backed save/load) */
+.ap-presets {
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, rgba(123,44,191,0.10), rgba(20,8,42,0.55));
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+}
+.ap-presets-head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 10px;
+}
+.ap-presets-title {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--accent-warm);
+}
+.ap-presets-help {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+}
+.ap-presets-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 36px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.ap-presets-chips:empty::before {
+  /* Text is supplied at runtime via data-empty-text attribute on the
+     container, localized per page (EN/DE/IT). Falls back to EN if
+     missing for some reason. */
+  content: attr(data-empty-text);
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  font-style: italic;
+}
+.ap-preset-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(201,163,255,0.08);
+  border: 1px solid rgba(201,163,255,0.18);
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease, transform 0.12s ease;
+  user-select: none;
+}
+.ap-preset-chip:hover {
+  background: rgba(201,163,255,0.16);
+  border-color: rgba(201,163,255,0.32);
+}
+.ap-preset-chip.active {
+  background: rgba(255, 209, 102, 0.16);
+  border-color: var(--c1-yellow);
+  color: var(--c1-yellow);
+  box-shadow: 0 0 0 2px rgba(255, 209, 102, 0.20), 0 4px 14px rgba(255, 209, 102, 0.15);
+}
+.ap-preset-chip.is-default {
+  background: rgba(255, 209, 102, 0.08);
+  border-color: rgba(255, 209, 102, 0.40);
+}
+.ap-preset-chip.is-default.active {
+  background: rgba(255, 209, 102, 0.20);
+}
+.ap-preset-chip-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(255, 90, 90, 0.0);
+  color: var(--ink-muted);
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.ap-preset-chip-delete:hover {
+  background: rgba(255, 90, 90, 0.25);
+  color: #ffb0b0;
+}
+.ap-preset-chip-default-badge {
+  font-size: 0.66rem;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--c1-yellow);
+  opacity: 0.75;
+  margin-left: 2px;
+}
+.ap-presets-save {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.ap-presets-save input[type="text"] {
+  flex: 1 1 200px;
+  min-width: 160px;
+  background: rgba(10,4,20,0.55);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-family: inherit;
+  transition: border-color 0.15s ease;
+}
+.ap-presets-save input[type="text"]:focus {
+  outline: none;
+  border-color: var(--c1-yellow);
+  background: rgba(10,4,20,0.75);
+}
+.ap-btn-preset {
+  padding: 8px 14px;
+  background: linear-gradient(135deg, var(--c1-yellow), var(--c1-yellow-deep));
+  color: #1a0b2e;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  box-shadow: 0 4px 14px var(--c1-yellow-glow);
+}
+.ap-btn-preset:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px var(--c1-yellow-glow);
+}
+.ap-btn-preset-ghost {
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1px solid var(--card-border);
+  box-shadow: none;
+}
+.ap-btn-preset-ghost:hover {
+  background: rgba(255,255,255,0.04);
+  color: var(--ink);
+}
+
 .ap-tips {
   margin-top: 18px;
   padding: 14px 16px;

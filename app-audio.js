@@ -61,6 +61,10 @@
     audioVox.volume  = parseFloat(volVox.value);
     audioDrone.volume = parseFloat(volDrone.value);
   }
+  // Expose for the mixer-presets module — when a preset is loaded,
+  // it calls window.applyVolumes() so audio levels track the new slider
+  // values immediately.
+  window.applyVolumes = applyVolumes;
 
   function fmt(sec) {
     if (!isFinite(sec)) sec = 0;

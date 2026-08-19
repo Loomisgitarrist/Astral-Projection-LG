@@ -9,7 +9,7 @@
      - On activate, purge any old cache from a previous version of this SW.
 */
 
-const CACHE_NAME = 'astral-lg-shell-v20';
+const CACHE_NAME = 'astral-lg-shell-v21';
 
 const SHELL = [
   './',
@@ -18,6 +18,7 @@ const SHELL = [
   './styles.css',
   './app.js',
   './app-audio.js',
+  './mixer-presets.js',
   './manifest.webmanifest',
   './images/icon-192.png',
   './images/icon-512.png',
