@@ -532,24 +532,51 @@ small { color: var(--ink-muted); }
 
 /* Live value display on each mixer slider. Shows current numeric value
    next to the label so users can see what they're setting. */
+.ap-mix-row {
+  /* Match the existing .ap-mixer label styles plus: keep all three rows
+     the same height so labels with longer text don't push the column
+     out of alignment. The min-height leaves room for up to 2 lines of
+     label text but keeps a single-line row visually balanced. */
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 76px;
+  justify-content: flex-start;
+}
 .ap-mix-row .ap-mix-label {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  gap: 8px;
+  align-items: center;
+  gap: 6px;
   width: 100%;
+  /* Single-line labels: longer ones truncate with ellipsis rather than
+     wrapping to a 2nd line and unbalancing the row. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ap-mix-row .ap-mix-label > :first-child {
+  /* The label text itself: shrink-to-fit so 'Binaurale (base theta)'
+     doesn't push the value chip out of view. */
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .ap-val {
+  /* Compact value chip: small enough that the label can take most of
+     the row width on narrow columns. */
+  flex: 0 0 auto;
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.70rem;
   font-weight: 600;
   color: var(--c1-yellow);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   background: rgba(255, 209, 102, 0.10);
   border: 1px solid rgba(255, 209, 102, 0.30);
-  padding: 2px 8px;
-  border-radius: 6px;
-  min-width: 42px;
+  padding: 1px 6px;
+  border-radius: 5px;
+  min-width: 36px;
   text-align: center;
   text-transform: none;
   transition: transform 0.12s ease, background 0.12s ease;
@@ -674,8 +701,12 @@ input[type="range"]:active + .ap-mix-label .ap-val,
   align-items: center;
 }
 .ap-presets-save input[type="text"] {
-  flex: 1 1 200px;
-  min-width: 160px;
+  /* flex-grow but with a sensible basis so the input doesn't grab the
+     full row when the buttons are present — buttons sit on the same
+     line, input shrinks to make room, nothing overlaps. */
+  flex: 1 1 0;
+  min-width: 140px;
+  width: auto;
   background: rgba(10,4,20,0.55);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-sm);
@@ -710,6 +741,33 @@ input[type="range"]:active + .ap-mix-label .ap-val,
   transition: transform 0.12s ease, box-shadow 0.12s ease;
   box-shadow: 0 4px 14px var(--c1-yellow-glow);
 }
+
+/* Icon-only variant: square aspect, no text styling. The SVG inside
+   fills the button. Used for the Save / Cancel preset buttons to keep
+   the row compact and visually clean. */
+.ap-btn-icon {
+  padding: 8px;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.ap-btn-icon svg {
+  display: block;
+  color: currentColor;
+}
+/* Edit-mode variant: when the user is updating an existing preset,
+   the icon button gets a mint outline so the save button visually
+   signals "this will overwrite, not create new". */
+.ap-btn-preset.is-edit {
+  background: linear-gradient(135deg, var(--c4-mint), var(--c4-mint-deep));
+  color: #06281a;
+  box-shadow: 0 4px 14px var(--c4-mint-glow);
+}
+.ap-btn-preset.is-edit:hover {
+  box-shadow: 0 6px 18px var(--c4-mint-glow);
+}
 .ap-btn-preset:hover {
   transform: translateY(-1px);
   box-shadow: 0 6px 18px var(--c1-yellow-glow);
@@ -737,11 +795,19 @@ input[type="range"]:active + .ap-mix-label .ap-val,
     margin-bottom: 4px;
   }
   .ap-btn-preset {
-    flex: 1 1 auto;
+    /* On mobile, text-bearing buttons share the row equally. Icon
+       buttons stay compact 36×36 so they don't get squished. */
+    flex: 1 1 0;
     min-width: 0;
     padding: 8px 10px;
     font-size: 0.70rem;
     letter-spacing: 0.04em;
+  }
+  .ap-btn-icon {
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    padding: 8px;
   }
 }
 
@@ -970,10 +1036,25 @@ footer {
 }
 .ap-stage .audio-player {
   margin: 0 auto;
-  max-width: 760px;
+  /* Percentage-based width so the card stretches to fill most of the
+     viewport at every size. Capped at 980px so it doesn't get absurdly
+     wide on huge monitors. On smaller screens (below 960px), the card
+     fills its wrap edge-to-edge with normal padding so it stays
+     usable on mobile. */
+  width: 92%;
+  max-width: 980px;
   background: linear-gradient(135deg, rgba(10,4,20,0.85), rgba(20,8,42,0.92));
   backdrop-filter: blur(8px) saturate(120%);
   -webkit-backdrop-filter: blur(8px) saturate(120%);
+}
+@media (max-width: 960px) {
+  /* Below the breakpoint, fill the wrap with normal margins rather
+     than staying capped — keeps the card visually balanced at every
+     viewport width including mobile. */
+  .ap-stage .audio-player {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 @media (max-width: 640px) {
   .ap-stage { padding: 32px 0 24px; }

@@ -233,11 +233,11 @@
     if (p.isDefault) {
       // Reset the save form so the user starts fresh from the default.
       nameEl.value = '';
-      saveBtn.textContent = saveBtn.dataset.defaultLabel || 'Save current';
+      setSaveIconMode(false);
       cancelBtn.hidden = true;
     } else {
       nameEl.value = p.name;
-      saveBtn.textContent = saveBtn.dataset.updateLabel || 'Update';
+      setSaveIconMode(true);
       cancelBtn.hidden = false;
     }
   }
@@ -268,7 +268,7 @@
       presets = await getAll();
       renderChips();
       setActive(id);
-      saveBtn.textContent = saveBtn.dataset.updateLabel || 'Update';
+      setSaveIconMode(true);
       cancelBtn.hidden = false;
       // Fire-and-forget Airtable sync (stub for now)
       airtable.syncPut(preset).catch(() => {});
@@ -294,14 +294,29 @@
   }
 
   // ---------- Wire save / cancel buttons ----------
-  saveBtn.dataset.defaultLabel = saveBtn.textContent;
-  // Capture the localized "Update" / "Aktualisieren" / "Aggiorna" text
-  // for when the user is editing an existing preset. We piggyback on
-  // the inline "Cancel" / "Abbrechen" / "Annulla" sibling to keep this
-  // one file language-agnostic — the cancel button's text becomes the
-  // update label too, since both end with "-annulla"-ish energy. This
-  // works because cancel and update are paired in every language.
-  saveBtn.dataset.updateLabel = cancelBtn.textContent.trim();
+  // Both buttons are icon-only (floppy = save, X = cancel). When the
+  // user starts editing an existing preset, we swap the save icon to a
+  // check-mark to visually signal "update" mode. The title + aria-label
+  // switch to the localized "Update" / "Aktualisieren" / "Aggiorna"
+  // text in the same moment. Both label sets come from data attributes
+  // on the buttons in the HTML so this file stays language-agnostic.
+  saveBtn.dataset.saveTitle = saveBtn.getAttribute('title') || saveBtn.getAttribute('aria-label');
+  cancelBtn.dataset.cancelTitle = cancelBtn.getAttribute('title') || cancelBtn.getAttribute('aria-label');
+
+  // SVG icons: the floppy (default) and a check-mark (used when editing
+  // an existing preset). Both inherit currentColor so they match the
+  // button's text/background styling.
+  const FLOPPY_SVG = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>';
+  const CHECK_SVG  = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+
+  // Keep references so we can restore the original floppy icon later.
+  saveBtn._iconDefault = FLOPPY_SVG;
+  saveBtn._iconEdit    = CHECK_SVG;
+
+  function setSaveIconMode(editing) {
+    saveBtn.innerHTML = editing ? CHECK_SVG : FLOPPY_SVG;
+    saveBtn.classList.toggle('is-edit', !!editing);
+  }
 
   saveBtn.addEventListener('click', savePreset);
   cancelBtn.addEventListener('click', () => {
