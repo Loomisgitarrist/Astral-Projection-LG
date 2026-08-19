@@ -9,7 +9,7 @@
      - On activate, purge any old cache from a previous version of this SW.
 */
 
-const CACHE_NAME = 'astral-lg-shell-v23';
+const CACHE_NAME = 'astral-lg-shell-v24';
 
 const SHELL = [
   './',
