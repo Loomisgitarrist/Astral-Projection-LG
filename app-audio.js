@@ -44,9 +44,15 @@
   const VOICE_SRC = {
     en: 'audio/tracks/induction-en.mp3',
     de: 'audio/tracks/induction-de.mp3',
+    it: 'audio/tracks/induction-it.mp3',
   };
 
-  let currentLang = 'en';
+  // Pick the default language from the page's <html lang="..."> attribute.
+  // Falls back to EN if the lang attribute is missing or unknown.
+  const pageLang = (document.documentElement.lang || 'en').toLowerCase();
+  const defaultLang = VOICE_SRC[pageLang] ? pageLang : 'en';
+
+  let currentLang = defaultLang;
   let isPlaying = false;
   let loopsLoaded = false;
 

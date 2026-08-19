@@ -124,7 +124,7 @@ def probe_duration(path: Path) -> float:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--lang", choices=["en", "de"], required=True)
+    ap.add_argument("--lang", choices=["en", "de", "it"], required=True)
     ap.add_argument("--voice", default="d9283bb95622")
     ap.add_argument("--num-step", type=int, default=32)
     args = ap.parse_args()
