@@ -24,14 +24,16 @@
 
   // ---------- Hardcoded default preset ----------
   // This is the starting values for EVERY user on EVERY device on first
-  // visit, before they've saved any of their own. The user can pick
-  // their own values here once they've tested the sliders live.
+  // visit, before they've saved any of their own. User-confirmed:
+  // binaural very low (0.14) so the floor is subtle, voice guide
+  // cranked (1.00) so Jessa is fully audible, drone in the middle
+  // (0.39) for ambient fill without overpowering the voice.
   const DEFAULT_PRESET = Object.freeze({
     id: '__default__',
     name: 'Default',
-    binaural: 0.45,
-    voice: 0.95,
-    drone: 0.45,
+    binaural: 0.14,
+    voice: 1.00,
+    drone: 0.39,
     isDefault: true,
     createdAt: 0,
     updatedAt: 0,
