@@ -224,16 +224,20 @@ small { color: var(--ink-muted); }
   .nav-inner { height: 64px; }
   .nav-links {
     display: none;
-    position: absolute; top: 100%; left: 0; right: 0;
+    /* position: fixed so the dropdown escapes any ancestor stacking
+       context. Combined with z-index 9999 below, this guarantees the
+       mobile menu always paints on top of any page content — including
+       the audio player stage below the header. */
+    position: fixed; top: 64px; left: 0; right: 0;
     flex-direction: column; align-items: stretch; gap: 0;
     background: rgba(10,4,20,0.97);
     padding: 8px 0 16px;
     border-top: 1px solid var(--card-border);
-    /* Very high so the mobile dropdown always sits on top of any
-       page content below the header — even if a future section gets
-       its own z-index. Stays just under the menu button so the
-       button remains tappable above the open menu. */
-    z-index: 9999;
+    z-index: 99999;
+    /* Match the inner-nav horizontal padding so the menu aligns
+       with the brand mark / hamburger button above it */
+    padding-left: 16px;
+    padding-right: 16px;
   }
   .nav-links.open { display: flex; }
   .nav-links a { padding: 12px 24px; border-radius: 0; justify-content: flex-start; border-bottom: 1px solid rgba(201,163,255,0.08); width: 100%; }
