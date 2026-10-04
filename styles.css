@@ -191,6 +191,40 @@ small { color: var(--ink-muted); }
 .nav-links a svg { flex-shrink: 0; opacity: 0.85; }
 .nav-links a:hover svg { opacity: 1; }
 
+/* Inline nav — scroll horizontally when the row doesn't fit, so every option
+   stays reachable instead of running off the right edge. The scrollbar only
+   appears when the content actually overflows; when it fits, nothing changes. */
+.brand { flex-shrink: 0; }
+.nav-links--inline {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
+  align-self: stretch;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201,163,255,0.30) transparent;
+}
+.nav-links--inline::-webkit-scrollbar { height: 4px; }
+.nav-links--inline::-webkit-scrollbar-track { background: transparent; }
+.nav-links--inline::-webkit-scrollbar-thumb {
+  background: rgba(201,163,255,0.26);
+  border-radius: 999px;
+}
+.nav-links--inline::-webkit-scrollbar-thumb:hover { background: rgba(201,163,255,0.45); }
+/* Keep the language switch pinned to the right edge while the section links
+   scroll underneath it, so it is always visible. */
+.nav-links--inline .lang-switch {
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  margin-left: 10px;
+  background: rgba(12,5,24,0.92);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+}
+
 /* Language switch */
 .lang-switch {
   display: flex; align-items: center;
