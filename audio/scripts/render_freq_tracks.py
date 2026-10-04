@@ -6,6 +6,11 @@ Binaural beats: two slightly different frequencies (e.g. 200 Hz left, 204 Hz rig
 produce a perceived 4 Hz theta pulsation when listened to on stereo headphones.
 This is the "Hemi-Sync" / "Focus 10" floor used by the Monroe Institute.
 
+Monaural beat: the SAME two tones summed into one channel so both ears hear the
+exact same signal. The 4 Hz beat is produced physically (amplitude beating)
+rather than by the brainstem, so it works on any speaker / a single earbud —
+no stereo headphones required. This backs the site's Mono/Stereo output switch.
+
 Outputs:
   audio/tracks/01-binaural-4hz-15min.wav
   audio/tracks/03-drone-ambient-15min.wav
@@ -16,6 +21,7 @@ Math only — no API calls.
 
 import math
 import struct
+import subprocess
 import wave
 from pathlib import Path
 
@@ -114,10 +120,50 @@ def render_drone(duration_min: int = 15) -> Path:
     print(f"✓ wrote {out}")
     return out
 
+def encode_mp3(wav_path: Path, mp3_path: Path, mono: bool = False):
+    """Encode a WAV to 128k mp3 (optionally downmixing to a single channel)."""
+    cmd = ["ffmpeg", "-y", "-i", str(wav_path), "-codec:a", "libmp3lame", "-b:a", "128k"]
+    if mono:
+        cmd += ["-ac", "1"]
+    cmd.append(str(mp3_path))
+    subprocess.run(cmd, check=True, stderr=subprocess.DEVNULL)
+    print(f"\u2713 encoded {mp3_path.name}")
+
+
+# ---------- Monaural beat 4 Hz theta (same signal both ears) ----------
+
+def render_monaural(duration_min: int = 15, beat_hz: float = 4.0,
+                    base_hz: float = 200.0, amp: float = 0.225) -> Path:
+    n = int(duration_min * 60 * SR)
+    low = base_hz
+    high = base_hz + beat_hz   # 200 + 204 summed -> physical 4 Hz amplitude beat
+    print(f"\u2192 generating monaural beat: {duration_min} min, {beat_hz} Hz beat "
+          f"({low:.0f} + {high:.0f} Hz summed, same both ears)")
+    samples = []
+    fade_n = 5 * SR
+    for i in range(n):
+        t = i / SR
+        s = amp * (math.sin(2 * math.pi * low * t) + math.sin(2 * math.pi * high * t))
+        env = 1.0
+        if i < fade_n:
+            env = i / fade_n
+        elif i > n - fade_n:
+            env = (n - i) / fade_n
+        samples.append(s * env)
+    out = TRACK_DIR / f"02-monaural-{beat_hz:.0f}hz-{duration_min}min.wav"
+    write_wav(out, samples, samples)  # identical L/R — true mono
+    print(f"\u2713 wrote {out}")
+    return out
+
+
 def main():
     bin_path = render_binaural(15)
+    mono_path = render_monaural(15)
     drone_path = render_drone(15)
-    print(f"\nready: {bin_path.name}  +  {drone_path.name}")
+    # Encode the frequency tracks to mp3 for the web player.
+    encode_mp3(bin_path, bin_path.with_suffix(".mp3"), mono=False)   # stereo binaural
+    encode_mp3(mono_path, mono_path.with_suffix(".mp3"), mono=True)  # mono monaural
+    print(f"\nready: {bin_path.name}  +  {mono_path.name}  +  {drone_path.name}")
 
 if __name__ == "__main__":
     main()

@@ -1,18 +1,28 @@
 /* ================================================================
    Astral Projection LG — Audio Player
-   Three-layer player:
-     - binaural (4 Hz theta) — loops, plays the whole session
-     - voice  (Jessa Lynn guided induction) — single play, switchable EN/DE
+   Four-layer player:
+     - freq   (theta floor) — TWO selectable sources, chosen with the
+               "Frequency output" switch:
+                 · Stereo — binaural beat, a slightly different tone in
+                   each ear (200 Hz L / 204 Hz R) → 4 Hz beat. Needs
+                   stereo headphones.
+                 · Mono   — monaural beat, both tones summed so the two
+                   ears hear the SAME signal → 4 Hz beat. Works on any
+                   speaker / a single earbud.
+               Both loop for the whole session.
+     - voice  (Jessa Lynn guided induction) — single play, EN/DE/IT
      - drone  (ambient pad) — loops, optional layer
 
    Behavior:
-     - Click play => all three start simultaneously (after first user gesture).
-     - Volume sliders per layer.
+     - Click play => all layers start simultaneously (after first user gesture).
+     - Volume sliders per layer; the "theta floor" slider drives whichever
+       frequency source is active.
      - Progress bar = voice track time (the bounded one).
      - Language switch swaps voice src in-place; if playing, preserves time.
+     - Mode switch swaps the frequency source in-place; if playing, keeps playing.
 
    Note on precache:
-     The SW precaches only the induction mp3s. The two looping layers use
+     The SW precaches only the induction mp3s. The looping layers use
      preload="none" so the browser doesn't fetch them on every page load;
      we manually call .load() the first time the user presses play.
    ================================================================ */
@@ -22,24 +32,26 @@
   const root = el('ap');
   if (!root) return;
 
-  const audioBin = el('ap-binaural');
-  const audioVox = el('ap-voice');
-  const audioDrone = el('ap-drone');
+  const audioBin     = el('ap-binaural');       // stereo — different tone each ear
+  const audioBinMono = el('ap-binaural-mono');  // mono — same both ears
+  const audioVox     = el('ap-voice');
+  const audioDrone   = el('ap-drone');
 
-  const btnPlay = el('ap-play');
+  const btnPlay    = el('ap-play');
   const btnRestart = el('ap-restart');
-  const iconPlay = btnPlay && btnPlay.querySelector('.ap-icon-play');
-  const iconPause = btnPlay && btnPlay.querySelector('.ap-icon-pause');
-  const prog = el('ap-progress');
-  const progFill = el('ap-progress-fill');
-  const time = el('ap-time');
-  const loading = el('ap-loading');
+  const iconPlay   = btnPlay && btnPlay.querySelector('.ap-icon-play');
+  const iconPause  = btnPlay && btnPlay.querySelector('.ap-icon-pause');
+  const prog       = el('ap-progress');
+  const progFill   = el('ap-progress-fill');
+  const time       = el('ap-time');
+  const loading    = el('ap-loading');
 
-  const volBin = el('ap-vol-binaural');
-  const volVox = el('ap-vol-voice');
+  const volBin   = el('ap-vol-binaural');
+  const volVox   = el('ap-vol-voice');
   const volDrone = el('ap-vol-drone');
 
   const langBtns = root.querySelectorAll('.ap-lang-btn');
+  const modeBtns = root.querySelectorAll('.ap-mode-btn');
 
   const VOICE_SRC = {
     en: 'audio/tracks/induction-en.mp3',
@@ -53,12 +65,19 @@
   const defaultLang = VOICE_SRC[pageLang] ? pageLang : 'en';
 
   let currentLang = defaultLang;
+  let currentMode = 'stereo'; // 'stereo' (binaural) | 'mono' (monaural)
   let isPlaying = false;
   let loopsLoaded = false;
 
+  // The frequency source currently selected.
+  const freqEl = () => (currentMode === 'mono' && audioBinMono ? audioBinMono : audioBin);
+  // Both frequency sources — kept in sync for volume / teardown.
+  const bothFreq = () => [audioBin, audioBinMono].filter(Boolean);
+
   function applyVolumes() {
-    audioBin.volume  = parseFloat(volBin.value);
-    audioVox.volume  = parseFloat(volVox.value);
+    const v = parseFloat(volBin.value);
+    bothFreq().forEach((a) => { a.volume = v; });
+    audioVox.volume   = parseFloat(volVox.value);
     audioDrone.volume = parseFloat(volDrone.value);
   }
   // Expose for the mixer-presets module — when a preset is loaded,
@@ -104,9 +123,41 @@
     });
   }
 
+  // Switch the frequency source (stereo binaural ⇄ mono monaural) without
+  // interrupting the session — if it was playing, it keeps playing.
+  function setMode(mode) {
+    if (mode !== 'stereo' && mode !== 'mono') return;
+    if (mode === currentMode) return;
+    const wasPlaying = isPlaying;
+
+    // Stop the outgoing source cleanly.
+    const prev = freqEl();
+    if (prev) {
+      prev.pause();
+      prev.currentTime = 0;
+    }
+
+    currentMode = mode;
+
+    // Prime the incoming source at the current volume.
+    const next = freqEl();
+    if (next) {
+      next.volume = parseFloat(volBin.value);
+      next.load();
+      if (wasPlaying) next.play().catch(() => {});
+    }
+
+    modeBtns.forEach(b => {
+      const active = b.dataset.mode === mode;
+      b.classList.toggle('active', active);
+      b.setAttribute('aria-checked', String(active));
+    });
+  }
+
   function ensureLoopsLoaded() {
     if (loopsLoaded) return;
     audioBin.load();
+    if (audioBinMono) audioBinMono.load();
     audioDrone.load();
     loopsLoaded = true;
   }
@@ -123,7 +174,8 @@
   function play() {
     ensureLoopsLoaded();
     applyVolumes();
-    audioBin.currentTime = 0;
+    const freq = freqEl();
+    if (freq) freq.currentTime = 0;
     audioDrone.currentTime = 0;
 
     // If the voice track isn't ready yet, hold the play state until
@@ -145,7 +197,7 @@
         audioVox.removeEventListener('canplay', onReady);
         audioVox.removeEventListener('loadeddata', onReady);
         hideLoading();
-        Promise.allSettled([audioBin.play(), audioVox.play(), audioDrone.play()])
+        Promise.allSettled([freqEl().play(), audioVox.play(), audioDrone.play()])
           .then(() => setPlayingState(true));
       };
       audioVox.addEventListener('canplay', onReady);
@@ -157,14 +209,14 @@
     }
 
     Promise.allSettled([
-      audioBin.play(),
+      freqEl().play(),
       audioVox.play(),
       audioDrone.play(),
     ]).then(() => setPlayingState(true));
   }
 
   function pause() {
-    audioBin.pause();
+    bothFreq().forEach((a) => a.pause());
     audioVox.pause();
     audioDrone.pause();
     setPlayingState(false);
@@ -180,7 +232,7 @@
 
   btnPlay.addEventListener('click', togglePlay);
   btnRestart.addEventListener('click', () => {
-    audioBin.currentTime = 0;
+    bothFreq().forEach((a) => { a.currentTime = 0; });
     audioVox.currentTime = 0;
     audioDrone.currentTime = 0;
     tick();
@@ -198,6 +250,7 @@
   volDrone.addEventListener('input', applyVolumes);
 
   langBtns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+  modeBtns.forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
 
   audioVox.addEventListener('timeupdate', tick);
   audioVox.addEventListener('loadedmetadata', () => {
@@ -206,7 +259,7 @@
   });
   audioVox.addEventListener('ended', () => {
     setTimeout(() => {
-      audioBin.pause();
+      bothFreq().forEach((a) => a.pause());
       audioDrone.pause();
       setPlayingState(false);
     }, 800);

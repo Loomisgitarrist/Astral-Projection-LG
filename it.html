@@ -133,6 +133,21 @@
           <span class="ap-time" id="ap-time">0:00 / 0:00</span>
         </div>
 
+        <!-- Uscita frequenze: Mono (uguale nelle due orecchie) vs Stereo (binaurale, diverso per orecchio) -->
+        <div class="ap-mode" id="ap-mode">
+          <span class="ap-mode-title">Uscita frequenze</span>
+          <div class="ap-mode-seg" role="radiogroup" aria-label="Uscita frequenze">
+            <button type="button" class="ap-mode-btn active" data-mode="stereo" role="radio" aria-checked="true">
+              <span class="ap-mode-name">Stereo</span>
+              <span class="ap-mode-sub">diverso per orecchio · cuffie</span>
+            </button>
+            <button type="button" class="ap-mode-btn" data-mode="mono" role="radio" aria-checked="false">
+              <span class="ap-mode-name">Mono</span>
+              <span class="ap-mode-sub">uguale nelle due orecchie · qualsiasi altoparlante</span>
+            </button>
+          </div>
+        </div>
+
         <div class="ap-mixer">
           <label class="ap-mix-row">
             <span class="ap-mix-label">Binaurale (base theta) <span class="ap-val" id="ap-val-binaural">0.14</span></span>
@@ -172,8 +187,15 @@
           chiudi gli occhi e segui la voce di Jessa. La base binaurale fa il resto.
         </div>
 
+        <div class="ap-warning" role="note">
+          <strong>⚠️ Attenzione — epilessia:</strong> non usare audio di brainwave entrainment se soffri di
+          epilessia o hai una storia di crisi epilettiche senza prima consultare un medico. La stimolazione
+          sonora ritmica può scatenare crisi nelle persone predisposte.
+        </div>
+
         <!-- Three audio elements driven by the player. -->
         <audio id="ap-binaural" src="audio/tracks/01-binaural-4hz-15min.mp3" preload="none" loop></audio>
+        <audio id="ap-binaural-mono" src="audio/tracks/02-monaural-4hz-15min.mp3" preload="none" loop></audio>
         <audio id="ap-voice" src="audio/tracks/induction-it.mp3" preload="metadata"></audio>
         <audio id="ap-drone" src="audio/tracks/03-drone-ambient-15min.mp3" preload="none" loop></audio>
       </div>

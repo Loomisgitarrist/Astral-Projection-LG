@@ -137,6 +137,21 @@
           <span class="ap-time" id="ap-time">0:00 / 0:00</span>
         </div>
 
+        <!-- Frequenz-Ausgabe: Mono (auf beiden Seiten gleich) vs. Stereo (binaural, je Ohr anders) -->
+        <div class="ap-mode" id="ap-mode">
+          <span class="ap-mode-title">Frequenz-Ausgabe</span>
+          <div class="ap-mode-seg" role="radiogroup" aria-label="Frequenz-Ausgabe">
+            <button type="button" class="ap-mode-btn active" data-mode="stereo" role="radio" aria-checked="true">
+              <span class="ap-mode-name">Stereo</span>
+              <span class="ap-mode-sub">je Ohr anders · Kopfhörer</span>
+            </button>
+            <button type="button" class="ap-mode-btn" data-mode="mono" role="radio" aria-checked="false">
+              <span class="ap-mode-name">Mono</span>
+              <span class="ap-mode-sub">auf beiden Seiten gleich · jeder Lautsprecher</span>
+            </button>
+          </div>
+        </div>
+
         <div class="ap-mixer">
           <label class="ap-mix-row">
             <span class="ap-mix-label">Binaural (Theta-Basis) <span class="ap-val" id="ap-val-binaural">0.14</span></span>
@@ -177,7 +192,14 @@
           Basis erledigt den Rest.
         </div>
 
+        <div class="ap-warning" role="note">
+          <strong>⚠️ Achtung — Epilepsie:</strong> Nutze Brainwave-Entrainment-Audio nicht, wenn du Epilepsie
+          oder eine Vorgeschichte von Anfällen hast, ohne vorher einen Arzt zu konsultieren. Rhythmische
+          Klangstimulation kann bei empfänglichen Personen Anfälle auslösen.
+        </div>
+
         <audio id="ap-binaural" src="audio/tracks/01-binaural-4hz-15min.mp3" preload="none" loop></audio>
+        <audio id="ap-binaural-mono" src="audio/tracks/02-monaural-4hz-15min.mp3" preload="none" loop></audio>
         <audio id="ap-voice" src="audio/tracks/induction-de.mp3" preload="metadata"></audio>
         <audio id="ap-drone" src="audio/tracks/03-drone-ambient-15min.mp3" preload="none" loop></audio>
       </div>

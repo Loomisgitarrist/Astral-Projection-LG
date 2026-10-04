@@ -9,7 +9,7 @@
      - On activate, purge any old cache from a previous version of this SW.
 */
 
-const CACHE_NAME = 'astral-lg-shell-v26';
+const CACHE_NAME = 'astral-lg-shell-v27';
 
 const SHELL = [
   './',
@@ -28,6 +28,7 @@ const SHELL = [
   './images/og-banner.png',
   './images/whatsapp-300x200.png',
   './audio/tracks/01-binaural-4hz-15min.mp3',
+  './audio/tracks/02-monaural-4hz-15min.mp3',
   './audio/tracks/induction-en.mp3',
   './audio/tracks/induction-de.mp3',
   './audio/tracks/induction-it.mp3',

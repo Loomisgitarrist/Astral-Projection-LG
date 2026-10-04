@@ -2,7 +2,7 @@
 
 A complete, research-backed guide to astral projection — what it is, what modern neuroscience makes of it, ancient and modern history, and a step-by-step practical guide to doing it yourself.
 
-A bilingual (English / German) Progressive Web App with offline support and a guided audio session that talks you through the practice.
+A trilingual (English / German / Italian) Progressive Web App with offline support and a guided audio session that talks you through the practice.
 
 ## Live pages
 
@@ -14,11 +14,14 @@ Both pages link to each other via the language pill in the top-right of the nav.
 ## What's inside
 
 - **9 sections** of content — what it is, the brain science (temporal-parietal junction / dissociative states), ancient + modern history, what the experience is actually like, a 13-step practical guide, alternative entry methods (sleep paralysis, lucid-dream bridge, Yoga Nidra, Hemi-Sync, WBTB, float tanks), skeptical rebuttals, risks and side effects, FAQs.
-- **Custom audio player** built into the Guide section — three layers running simultaneously:
-  - **Binaural beat** (4 Hz theta, 200 Hz L / 204 Hz R, requires stereo headphones)
-  - **Voice guide** (Jessa Lynn ASMR voice via OmniVoice TTS) — **English** and **German** versions
+- **Custom audio player** built into the Guide section — layers running simultaneously:
+  - **Theta floor** (4 Hz) with a **Mono / Stereo output switch**:
+    - *Stereo* — a **binaural** beat, a slightly different tone in each ear (200 Hz L / 204 Hz R); needs stereo headphones.
+    - *Mono* — a **monaural** beat, both tones summed so each ear hears the same signal (200 + 204 Hz); works on any speaker or a single earbud.
+  - **Voice guide** (Jessa Lynn ASMR voice via OmniVoice TTS) — **English**, **German** and **Italian** versions
   - **Optional ambient drone** (40 Hz root + harmonics, off by default)
   - Independent volume mixers, progress bar with seek, language switch with time preservation
+  - **Safety notice** for people with epilepsy / a seizure history
 - **PWA-ready** — `manifest.webmanifest`, `sw.js`, 192/512/maskable icons, Apple touch icon, dark-purple theme, installable on iOS/Android/desktop, full offline support for all assets including audio (~46 MB install footprint).
 
 ## Stack
