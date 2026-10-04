@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://astral-projection-lg.loomyloo.app/sitemap.xml

@@ -1418,3 +1418,29 @@ body::before {
 .mth-src-list { margin: 12px 0 0; padding-left: 18px; color: var(--ink-soft); font-size: 0.92rem; }
 .mth-src-list li { margin: 0 0 6px; }
 .mth-disclaimer { margin-top: 18px; color: var(--ink-muted); font-size: 0.85rem; }
+
+/* ---------- Methods teaser (links to the Method Probabilities page) ---------- */
+.methods-teaser {
+  display: block;
+  margin-top: 26px;
+  padding: 20px 22px;
+  border-radius: var(--radius);
+  border: 1px solid var(--accent-hot);
+  background:
+    radial-gradient(600px 200px at 100% 0%, rgba(255,154,240,0.14), transparent 70%),
+    rgba(20,8,42,0.72);
+  box-shadow: var(--card-shadow);
+  text-decoration: none;
+  border-bottom: none;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+.methods-teaser:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(123,44,191,0.42); }
+.methods-teaser .mt-eyebrow {
+  display: block; font-family: var(--font-mono); font-size: 0.68rem;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-hot); margin-bottom: 6px;
+}
+.methods-teaser .mt-title {
+  display: block; font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 2.6vw, 1.4rem); color: var(--ink); margin-bottom: 5px;
+}
+.methods-teaser .mt-sub { display: block; color: var(--ink-soft); font-size: 0.92rem; line-height: 1.5; }
