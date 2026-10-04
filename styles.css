@@ -1315,3 +1315,72 @@ body::before {
   z-index: 0;
 }
 .wrap, .nav, footer { position: relative; z-index: 1; }
+
+/* ---------- Methods probability page ---------- */
+.mth-hero { padding: 64px 0 8px; text-align: left; }
+.mth-hero h1 { max-width: 860px; }
+.mth-hero .lead { max-width: 730px; color: var(--ink); font-size: clamp(1.02rem, 2.2vw, 1.15rem); }
+.mth-note {
+  margin-top: 22px; padding: 16px 18px;
+  border-left: 3px solid var(--accent);
+  background: rgba(201,163,255,0.06);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--ink-soft); font-size: 0.94rem; max-width: 800px;
+}
+.mth-note strong { color: var(--accent); }
+.mth-list { display: flex; flex-direction: column; gap: 14px; margin-top: 22px; }
+.mth-card {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: var(--card-shadow);
+}
+.mth-card.is-top {
+  border-color: var(--accent-hot);
+  box-shadow: 0 0 0 1px var(--accent-hot) inset, var(--card-shadow);
+}
+.mth-head { display: flex; align-items: flex-start; gap: 14px; }
+.mth-rank {
+  flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--font-mono); font-weight: 600; font-size: 0.92rem;
+  color: var(--accent); background: rgba(201,163,255,0.12); border: 1px solid var(--card-border);
+}
+.mth-card.is-top .mth-rank {
+  color: #1a0b2e;
+  background: linear-gradient(135deg, var(--accent-hot), var(--c1-yellow));
+  border-color: transparent;
+}
+.mth-titles { flex: 1; min-width: 0; }
+.mth-name { font-size: clamp(1.05rem, 2.4vw, 1.28rem); margin: 0 0 3px; color: var(--ink); }
+.mth-tags {
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--ink-muted);
+}
+.mth-score { flex-shrink: 0; text-align: right; padding-left: 8px; }
+.mth-pct {
+  display: block; font-family: var(--font-serif); font-weight: 700;
+  font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1; color: var(--accent-hot);
+}
+.mth-card.is-top .mth-pct { color: var(--c1-yellow); }
+.mth-pct-label {
+  font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--ink-muted);
+}
+.mth-bar {
+  height: 6px; border-radius: 999px; background: rgba(201,163,255,0.12);
+  margin: 14px 0; overflow: hidden;
+}
+.mth-bar-fill {
+  display: block; height: 100%; border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-hot));
+}
+.mth-card.is-top .mth-bar-fill { background: linear-gradient(90deg, var(--accent-hot), var(--c1-yellow)); }
+.mth-what, .mth-why { margin: 0 0 8px; font-size: 0.95rem; color: var(--ink-soft); }
+.mth-what strong, .mth-why strong { color: var(--accent); }
+.mth-why { margin-bottom: 0; }
+.mth-src-list { margin: 12px 0 0; padding-left: 18px; color: var(--ink-soft); font-size: 0.92rem; }
+.mth-src-list li { margin: 0 0 6px; }
+.mth-disclaimer { margin-top: 18px; color: var(--ink-muted); font-size: 0.85rem; }

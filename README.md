@@ -8,6 +8,8 @@ A trilingual (English / German / Italian) Progressive Web App with offline suppo
 
 - **English:** `./index.html`
 - **German (Deutsch):** `./de.html`
+- **Italian (Italiano):** `./it.html`
+- **Method probabilities:** `./methods.html` · `./methods-de.html` · `./methods-it.html`
 
 Both pages link to each other via the language pill in the top-right of the nav.
 
